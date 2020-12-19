@@ -6,15 +6,25 @@ let ballY = 50;
 let ballSpeedY = 4;
 
 let paddle1Y = 250;
+let paddle2Y = 250;
 const PADDLE_HEIGHT = 100;
+const PADDLE_THICKNESS = 10;
 
 function moveElements() {
   ballX += ballSpeedX;
   if (ballX > canvas.width) {
-    ballSpeedX = -ballSpeedX;
+    if(ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
+        ballSpeedX = - ballSpeedX
+    } else {
+        ballReset();
+    }
   }
   if (ballX < 0) {
-    ballSpeedX = -ballSpeedX;
+    if(ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
+        ballSpeedX = - ballSpeedX
+    } else {
+        ballReset();
+    }
   }
 
   ballY += ballSpeedY;
@@ -51,9 +61,16 @@ function drawBall(centerX, centerY, radius, drawColor) {
 
 function drawGame() {
   drawRectangle(0, 0, canvas.width, canvas.height, 'black');
-  drawRectangle(0, paddle1Y, 10, PADDLE_HEIGHT, 'white');
-  drawRectangle(800, 200, -10, 100, 'white');
+  drawRectangle(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
+  drawRectangle(canvas.width, paddle2Y, -PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
   drawBall(ballX, ballY, 10, 'white');
+}
+
+function ballReset() {
+    ballSpeedX = -ballSpeedX;
+    ballX = canvas.width / 2;
+    ballSpeedY = -ballSpeedY;
+    ballY = canvas.height / 2;
 }
 
 window.onload = () => {
