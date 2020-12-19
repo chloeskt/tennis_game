@@ -13,16 +13,23 @@ function moveElements() {
   }
 }
 
-function colorRectangle(leftX, topY, width, height, drawColor) {
+function drawRectangle(leftX, topY, width, height, drawColor) {
   canvasContext.fillStyle = drawColor;
   canvasContext.fillRect(leftX, topY, width, height);
 }
 
+function drawBall(centerX, centerY, radius, drawColor) {
+  canvasContext.fillStyle = drawColor;
+  canvasContext.beginPath();
+  canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+  canvasContext.fill();
+}
+
 function drawGame() {
-  colorRectangle(0, 0, canvas.width, canvas.height, 'black');
-  colorRectangle(0, 200, 10, 100, 'white');
-  colorRectangle(800, 200, -10, 100, 'white');
-  colorRectangle(ballX, 100, 10, 10, 'red');
+  drawRectangle(0, 0, canvas.width, canvas.height, 'black');
+  drawRectangle(0, 200, 10, 100, 'white');
+  drawRectangle(800, 200, -10, 100, 'white');
+  drawBall(ballX, 50, 10, 'white');
 }
 
 window.onload = () => {
