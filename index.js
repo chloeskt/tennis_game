@@ -10,20 +10,42 @@ let paddle2Y = 250;
 const PADDLE_HEIGHT = 100;
 const PADDLE_THICKNESS = 10;
 
+let player1Score = 0;
+let player2Score = 0;
+
+function ballReset() {
+  ballSpeedX = -ballSpeedX;
+  ballX = canvas.width / 2;
+  ballSpeedY = -ballSpeedY;
+  ballY = canvas.height / 2;
+}
+
+function computerMovement() {
+  const paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+  if (paddle2YCenter < ballY - 35) {
+    paddle2Y += 6;
+  } else if (paddle2YCenter > ballY + 35) {
+    paddle2Y -= 6;
+  }
+}
+
 function moveElements() {
+  computerMovement();
   ballX += ballSpeedX;
   if (ballX > canvas.width) {
-    if(ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
-        ballSpeedX = - ballSpeedX
+    if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
+      ballSpeedX = -ballSpeedX;
     } else {
-        ballReset();
+      ballReset();
+      player1Score++;
     }
   }
   if (ballX < 0) {
-    if(ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
-        ballSpeedX = - ballSpeedX
+    if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
+      ballSpeedX = -ballSpeedX;
     } else {
-        ballReset();
+      ballReset();
+      player2Score++;
     }
   }
 
@@ -64,18 +86,14 @@ function drawGame() {
   drawRectangle(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
   drawRectangle(canvas.width, paddle2Y, -PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
   drawBall(ballX, ballY, 10, 'white');
-}
-
-function ballReset() {
-    ballSpeedX = -ballSpeedX;
-    ballX = canvas.width / 2;
-    ballSpeedY = -ballSpeedY;
-    ballY = canvas.height / 2;
+  canvasContext.fillText(player1Score, 100, 100);
+  canvasContext.fillText(player2Score, canvas.width - 100, 100);
 }
 
 window.onload = () => {
   canvas = document.getElementById('gameCanvas');
   canvasContext = canvas.getContext('2d');
+  canvasContext.font = '28px serif';
 
   const framesPerSecond = 30;
   setInterval(
