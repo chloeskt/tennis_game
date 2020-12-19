@@ -10,7 +10,7 @@
             var canvas;
             var canvasContext;
             var ballX = 50;
-            var ballSpeedX = 5;
+            var ballSpeedX = 10;
 
             window.onload = function() {
                 canvas = document.getElementById("gameCanvas");
@@ -37,18 +37,16 @@
             }
 
             function drawGame() {
-                canvasContext.fillStyle = "black";
-                canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-                canvasContext.fillStyle = "white";
-                canvasContext.fillRect(0, 200, 10, 100);
-                canvasContext.fillStyle = "white";
-                canvasContext.fillRect(800, 200, -10, 100);
-                canvasContext.fillStyle = "red";
-                canvasContext.fillRect(ballX, 100, 10, 10);
+                colorRectangle(0, 0, canvas.width, canvas.height, "black");
+                colorRectangle(0, 200, 10, 100, "white");
+                colorRectangle(800, 200, -10, 100, "white");
+                colorRectangle(ballX, 100, 10, 10 ,"red");
             }
 
-
-
+            function colorRectangle(leftX, topY, width, height, drawColor) {
+                canvasContext.fillStyle = drawColor;
+                canvasContext.fillRect(leftX, topY, width, height);
+            }
 
         </script>
     </body>
