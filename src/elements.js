@@ -49,7 +49,7 @@ export default function moveElements(canvas) {
             ballSpeedY = deltaY * 0.33;
         } else {
             player1Score++;
-            ballReset();
+            ballReset(canvas);
         }
     }
 
@@ -61,7 +61,7 @@ export default function moveElements(canvas) {
             ballSpeedY = deltaY * 0.33;
         } else {
             player2Score++;
-            ballReset();
+            ballReset(canvas);
         }
     }
 
