@@ -7,13 +7,22 @@ let ballSpeedY = 4;
 
 let paddle1Y = 250;
 let paddle2Y = 250;
-const PADDLE_HEIGHT = 100;
+const PADDLE_HEIGHT = 120;
 const PADDLE_THICKNESS = 10;
+const WINNING_SCORE = 3;
 
 let player1Score = 0;
 let player2Score = 0;
 
+let showWinScreen = false;
+
 function ballReset() {
+  if (player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+    player1Score = 0;
+    player2Score = 0;
+    showWinScreen = true;
+  }
+
   ballSpeedX = -ballSpeedX;
   ballX = canvas.width / 2;
   ballSpeedY = -ballSpeedY;
@@ -30,29 +39,44 @@ function computerMovement() {
 }
 
 function moveElements() {
+  if (showWinScreen) {
+    return;
+  }
+
   computerMovement();
+
   ballX += ballSpeedX;
+
   if (ballX > canvas.width) {
     if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
       ballSpeedX = -ballSpeedX;
+
+      var deltaY = ballY - (paddle2Y + PADDLE_HEIGHT / 2);
+      ballSpeedY = deltaY * 0.2;
     } else {
-      ballReset();
       player1Score++;
+      ballReset();
     }
   }
+
   if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
       ballSpeedX = -ballSpeedX;
+
+      var deltaY = ballY - (paddle1Y + PADDLE_HEIGHT / 2);
+      ballSpeedY = deltaY * 0.2;
     } else {
-      ballReset();
       player2Score++;
+      ballReset();
     }
   }
 
   ballY += ballSpeedY;
+
   if (ballY > canvas.height) {
     ballSpeedY = -ballSpeedY;
   }
+
   if (ballY < 0) {
     ballSpeedY = -ballSpeedY;
   }
@@ -83,6 +107,13 @@ function drawBall(centerX, centerY, radius, drawColor) {
 
 function drawGame() {
   drawRectangle(0, 0, canvas.width, canvas.height, 'black');
+
+  if (showWinScreen) {
+    canvasContext.fillStyle = 'white';
+    canvasContext.fillText('Click to continue', 300, 300);
+    return;
+  }
+
   drawRectangle(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
   drawRectangle(canvas.width, paddle2Y, -PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
   drawBall(ballX, ballY, 10, 'white');
