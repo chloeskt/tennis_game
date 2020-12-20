@@ -18,8 +18,6 @@ let showWinScreen = false;
 
 function ballReset() {
   if (player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
-    player1Score = 0;
-    player2Score = 0;
     showWinScreen = true;
   }
 
@@ -110,7 +108,13 @@ function drawGame() {
 
   if (showWinScreen) {
     canvasContext.fillStyle = 'white';
-    canvasContext.fillText('Click to continue', 300, 300);
+
+    if (player1Score >= WINNING_SCORE) {
+      canvasContext.fillText('YOU WON!!', 350, 200);
+    } else if (player2Score >= WINNING_SCORE) {
+      canvasContext.fillText('The computer won :(', 350, 200);
+    }
+    canvasContext.fillText('Click to continue', 350, 500);
     return;
   }
 
@@ -119,6 +123,14 @@ function drawGame() {
   drawBall(ballX, ballY, 10, 'white');
   canvasContext.fillText(player1Score, 100, 100);
   canvasContext.fillText(player2Score, canvas.width - 100, 100);
+}
+
+function handleMouseClick() {
+  if (showWinScreen) {
+    player1Score = 0;
+    player2Score = 0;
+    showWinScreen = false;
+  }
 }
 
 window.onload = () => {
@@ -143,4 +155,6 @@ window.onload = () => {
     },
 
   );
+
+  canvas.addEventListener('mousedown', handleMouseClick);
 };
