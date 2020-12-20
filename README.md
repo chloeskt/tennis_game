@@ -12,4 +12,4 @@ git clone https://github.com/chloeskt/tennis_game.git
 
 ## Run the game
 
-Once the repo is cloned, run in your brower the `game.html` file. You can use your mouse to control the left paddle. Enjoy ! 
+Once the repo is cloned, run in your brower the `dist/index.html` file. You can use your mouse to control the left paddle. Enjoy ! 

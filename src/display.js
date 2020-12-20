@@ -25,9 +25,9 @@ function drawBall(canvasContext, centerX, centerY, radius, drawColor) {
     canvasContext.fill();
 }
 
-function drawNet(canvas) {
+function drawNet(canvas, canvasContext) {
     for (let i = 0; i < canvas.height; i += 40) {
-        drawRectangle(canvas.width / 2 - 1, i, 2, 20, 'white');
+        drawRectangle(canvasContext, canvas.width / 2 - 1, i, 2, 20, 'white');
     }
 }
 
@@ -44,16 +44,16 @@ function drawEndGame(canvasContext) {
 }
 
 function drawGame(canvas, canvasContext) {
-    drawRectangle(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
-    drawRectangle(canvas.width, paddle2Y, -PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
-    drawNet();
-    drawBall(ballX, ballY, 10, 'white');
+    drawRectangle(canvasContext, 0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
+    drawRectangle(canvasContext, canvas.width, paddle2Y, -PADDLE_THICKNESS, PADDLE_HEIGHT, 'white');
+    drawNet(canvas, canvasContext);
+    drawBall(canvasContext, ballX, ballY, 10, 'white');
     canvasContext.fillText(player1Score, 100, 100);
     canvasContext.fillText(player2Score, canvas.width - 100, 100);
 }
 
 export default function drawScreenDisplay(canvas, canvasContext) {
-    drawRectangle(0, 0, canvas.width, canvas.height, 'black');
+    drawRectangle(canvasContext, 0, 0, canvas.width, canvas.height, 'black');
 
     if (showWinScreen) {
         drawEndGame(canvasContext);
